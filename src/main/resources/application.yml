@@ -7,6 +7,8 @@ spring:
     password: senhaforte
     driver-class-name: org.postgresql.Driver
   jpa:
+    show-sql: true
+    format-sql: true
     hibernate:
       ddl-auto: update
     properties:

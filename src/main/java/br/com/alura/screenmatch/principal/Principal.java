@@ -1,6 +1,7 @@
 package br.com.alura.screenmatch.principal;
 
 import br.com.alura.screenmatch.model.*;
+import br.com.alura.screenmatch.repository.SerieRepository;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 
@@ -18,11 +19,19 @@ public class Principal {
     private Scanner leitura = new Scanner(System.in);
     private ConsumoApi consumo = new ConsumoApi();
     private ConverteDados conversor = new ConverteDados();
+    private List<DadosSerie> dadosSeries = new ArrayList<>();
+    private SerieRepository repository;
+
+    public Principal(SerieRepository repository) {
+        this.repository = repository;
+    }
+
 
     public void exibeMenu() {
         var menu = """
                 1 - Buscar séries
                 2 - Buscar episódios
+                3 - Listar séries mais buscadas
                 
                 0 - Sair                                 
                 """;
@@ -38,6 +47,9 @@ public class Principal {
             case 2:
                 buscarEpisodioPorSerie();
                 break;
+            case 3:
+                listarSeriesBuscadas();
+                break;
             case 0:
                 System.out.println("Saindo...");
                 break;
@@ -48,6 +60,8 @@ public class Principal {
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
+        Serie serie = new Serie(dados);
+        repository.save(serie);
         System.out.println(dados);
     }
 
@@ -59,7 +73,7 @@ public class Principal {
         return dados;
     }
 
-    private void buscarEpisodioPorSerie(){
+    private void buscarEpisodioPorSerie() {
         DadosSerie dadosSerie = getDadosSerie();
         List<DadosTemporadas> temporadas = new ArrayList<>();
 
@@ -71,14 +85,15 @@ public class Principal {
         temporadas.forEach(System.out::println);
     }
 
-//    private void listarSeriesBuscadas(){
+    private void listarSeriesBuscadas(){
 //        DadosSerie dadosSeries = getDadosSerie();
 //        List<Serie> series = new ArrayList<>();
 //        series = dadosSeries.stream()
 //                .map(d -> new Serie(d))
 //                .collect(Collectors.toList());
-//        series.stream()
-//                .sorted(Comparator.comparing(Serie::getGenero))
-//                .forEach(System.out::println);
-//    }
+        List<Serie> series = repository.findAll();
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
+    }
 }

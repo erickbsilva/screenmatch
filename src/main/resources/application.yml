@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: screenmatch
+  datasource:
+    url: jdbc:postgresql://localhost/alura_series
+    username: meuusuario
+    password: senhaforte
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

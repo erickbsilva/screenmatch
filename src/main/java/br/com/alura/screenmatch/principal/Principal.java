@@ -35,6 +35,8 @@ public class Principal {
                 3 - Listar séries mais buscadas
                 4 - Buscar série por título
                 5 - Buscar séries por Ator
+                6 - Buscar Top 5 Séries
+                7 - Buscar por categoria
                 
                 0 - Sair                                 
                 """;
@@ -61,6 +63,9 @@ public class Principal {
                 break;
             case 6:
                 buscarTop5Series();
+                break;
+            case 7:
+                buscarSeriePorCategoria();
                 break;
             case 0:
                 System.out.println("Saindo...");
@@ -139,12 +144,12 @@ public class Principal {
         }
     }
 
-    private void buscarSeriesPorAtor(){
+    private void buscarSeriesPorAtor() {
         System.out.println("Qual o nome para a busca?");
         var nomeAtor = leitura.nextLine();
         System.out.println("Avaliações a partir de qual valor?");
         var avaliacao = leitura.nextDouble();
-        List<Serie> seriesEncontradas = repository.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor,avaliacao);
+        List<Serie> seriesEncontradas = repository.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor, avaliacao);
         System.out.println("Séries em que " + nomeAtor + " trabalhou: ");
         seriesEncontradas.forEach(s -> System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
     }
@@ -152,5 +157,14 @@ public class Principal {
     private void buscarTop5Series() {
         List<Serie> serieTop = repository.findTop5ByOrderByAvaliacaoDesc();
         serieTop.forEach(s -> System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao()));
+    }
+
+    private void buscarSeriePorCategoria() {
+        System.out.println("Deseja buscar séries de que categoria/gênero? ");
+        var nomeGenero = leitura.nextLine();
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+        List<Serie> seriesPorCategoria = repository.findByGenero(categoria);
+        System.out.println("Séries da categoria: " + nomeGenero);
+        seriesPorCategoria.forEach(System.out::println);
     }
 }

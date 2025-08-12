@@ -27,7 +27,8 @@ public class Serie {
     private String poster;
     private String sinopse;
 
-    public Serie(){}
+    public Serie() {
+    }
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodio> episodios = new ArrayList<>();
@@ -119,12 +120,14 @@ public class Serie {
                 '}';
     }
 
-    public Serie(DadosSerie dadosSerie){
+    public Serie(DadosSerie dadosSerie) {
         this.titulo = dadosSerie.titulo();
         this.totalTemporadas = dadosSerie.totalTemporadas();
         // Faz um cast para double e tenta obter a avalição, se não cosneguir, retorna um zero.
         this.avaliacao = OptionalDouble.of(Double.valueOf(dadosSerie.avaliacao())).orElse(0);
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
+        System.out.println(Categoria.fromString(dadosSerie.genero().split(",")[0].trim()));
+        System.out.println(this.genero);
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
 //        this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();

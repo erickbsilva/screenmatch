@@ -23,28 +23,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-public class ScreenmatchApplication implements CommandLineRunner {
+//public class ScreenmatchApplication implements CommandLineRunner {
+public class ScreenmatchApplication {
 
-    @Autowired
-    private SerieRepository repository;
+//    @Autowired
+//    private SerieRepository repository;
 
     public static void main(String[] args) {
         SpringApplication.run(ScreenmatchApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-
-
-		Principal principal = new Principal(repository);
-        		principal.exibeMenu();
-
-//		PrincipalConceitosFiltros principalConceitosFiltros = new PrincipalConceitosFiltros();
-//		principalConceitosFiltros.exibeMenuOutros();
-
-//        PrincipalConceitosJson principalConceitosJson = new PrincipalConceitosJson(repository);
-//        principalConceitosJson.exibeFiltros();
-
-    }
+//    @Override
+//    public void run(String... args) throws Exception {
+//
+//
+//		Principal principal = new Principal(repository);
+//        		principal.exibeMenu();
+//
+////		PrincipalConceitosFiltros principalConceitosFiltros = new PrincipalConceitosFiltros();
+////		principalConceitosFiltros.exibeMenuOutros();
+//
+////        PrincipalConceitosJson principalConceitosJson = new PrincipalConceitosJson(repository);
+////        principalConceitosJson.exibeFiltros();
+//
+//    }
 
 }
